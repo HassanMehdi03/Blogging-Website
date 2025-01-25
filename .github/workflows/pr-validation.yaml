@@ -50,4 +50,4 @@ jobs:
         run: npm install
 
       - name: Build Static Files
-        run: npx parcel build src/index.html --no-minify
+        run: npx parcel build src/index.html
