@@ -22,6 +22,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: List Files in src Directory
+        run: ls -la src/
+
       - name: Build Website
         run: npx parcel build src/index.html --public-url ./
 
