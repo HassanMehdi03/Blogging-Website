@@ -1,4 +1,4 @@
-name: PR Validation
+name: Pull Request Validation
 
 on:
   pull_request:
@@ -9,30 +9,45 @@ jobs:
   linting:
     name: Lint HTML & CSS
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Install Dependencies
+        run: npm install
+
+      - name: Install Linting Tools
         run: |
           npm install -g htmlhint stylelint stylelint-config-standard
 
-      - name: Run HTMLHint
+      - name: Lint HTML Files
         run: htmlhint "src/*.html"
 
-      - name: Run Stylelint
+      - name: Lint CSS Files
         run: stylelint "styles/*.css"
 
   build:
-    name: Build Static Website
+    name: Build Website
     runs-on: ubuntu-latest
     needs: linting
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Parcel
-        run: npm install -g parcel-bundler
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-      - name: Build Website
-        run: parcel build src/index.html --no-cache
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Static Files
+        run: npx parcel build src/index.html --no-minify
