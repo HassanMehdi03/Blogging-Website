@@ -5,6 +5,11 @@ on:
     branches:
       - develop
 
+permissions:
+  id-token: write  
+  pages: write
+  contents: read 
+
 jobs:
   build:
     name: Build Static Website
